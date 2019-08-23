@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import time
@@ -10,7 +11,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 
 # 如果开启的话，默认解析第一条
 isDebug = False
-start_index = 1299  # 1130
+start_index = 50  # 1768
 
 # 文件写入
 is_write = True
@@ -18,9 +19,9 @@ tmp_book_info_json = ''
 write_file_path = 'BookInfo.txt'
 
 # 仅供调试使用
-is_test_url = True
-debug_url = 'https://book.douban.com/subject/1019568/'
-debug_name = '三国演义（全二册）'
+is_test_url = False
+debug_url = 'https://book.douban.com/subject/1014278/'
+debug_name = '红玫瑰与白玫瑰'
 
 
 def get_book_tags():
@@ -96,6 +97,9 @@ def get_book_detail(url, name):
                 book_info_json_joint('作者id', author_id.strip())
                 break
 
+        # 书名
+        deal_book_name(soup)
+
         # 豆瓣评分
         deal_rating_num(soup)
 
@@ -130,6 +134,8 @@ def deal_author_intro(soup):
     try:
         author_info = soup.select('#content > div > div.article > div.related_info > div.indent')[1]
         author_text = author_info.select('.intro')[0].text.strip()
+
+        author_text = re.sub('[\x00-\x1f]', ' ', str(author_text).replace('"', '\\"'))
         print('作者简介:' + author_text)
         book_info_json_joint('作者简介', author_text)
         return
@@ -138,6 +144,7 @@ def deal_author_intro(soup):
     try:
         author_info = soup.select('#content > div > div.article > div.related_info > div.indent')
         author_text = author_info[0].select('span')[1].select('.intro')[0].text.strip()
+        author_text = re.sub('[\x00-\x1f]', ' ', str(author_text).replace('"', '\\"'))
         print('作者简介:' + author_text)
         book_info_json_joint('作者简介', author_text)
         return
@@ -154,17 +161,32 @@ def deal_content_intro(soup):
     pos = len(link_list)
     if pos > 0:
         intro = link_list[0].select(".intro")[0].text.strip()
-        print('内容简介:' + str(intro))
-        book_info_json_joint('内容简介', str(intro))
+
+        # print('内容简介:' + str(intro))
+        # book_info_json_joint('内容简介', str(intro))
+
+        tmp_intro = re.sub('[\x00-\x1f]', ' ', intro.replace('"', '\\"'))
+        print('内容简介:' + tmp_intro)
+        book_info_json_joint('内容简介', tmp_intro)
         return
 
     link_list = soup.select('#link-report > span.all.hidden > div > div')
     pos = len(link_list)
     if pos > 0:
         intro = link_list[0].text.strip()
-        print('内容简介:' + str(intro))
-        book_info_json_joint('内容简介', str(intro))
+        tmp_intro = re.sub('[\x00-\x1f]', ' ', intro.replace('"', '\\"'))
+        print('内容简介:' + tmp_intro)
+        book_info_json_joint('内容简介', tmp_intro)
+        # book_info_json_joint('内容简介', str(intro))
         return
+
+
+def deal_book_name(soup):
+    book_name = soup.select('#wrapper > h1 > span')
+    if len(book_name) > 0:
+        name_str = book_name[0].text.strip()
+        print('书名:' + str(name_str))
+        book_info_json_joint('书名', name_str)
 
 
 def deal_rating_num(soup):
@@ -274,7 +296,10 @@ is_remove = False
 
 def write_book_info(book_info):
     content = '{' + str(book_info)[1:] + '}'
-    print('json:' + content)
+    json_str = json.loads(content)
+    print('test:' + str(json_str))
+    print(content)
+    print('检查json成功\n')
 
     if is_write:
         global is_remove
