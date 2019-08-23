@@ -11,17 +11,18 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 
 # 如果开启的话，默认解析第一条
 isDebug = False
-start_index = 50  # 1768
+start_index = 1272  # 1320
+end_index = -1
 
 # 文件写入
-is_write = True
+is_write = False
 tmp_book_info_json = ''
 write_file_path = 'BookInfo.txt'
 
 # 仅供调试使用
 is_test_url = False
-debug_url = 'https://book.douban.com/subject/1014278/'
-debug_name = '红玫瑰与白玫瑰'
+debug_url = 'https://book.douban.com/subject/27093233/'
+debug_name = '历史的温度'
 
 
 def get_book_tags():
@@ -35,6 +36,9 @@ def get_book_tags():
             for tr in trs:
                 print(tr.a.attrs['href'] + '  ' + tr.a.text.strip())
                 get_book_list(tag_head_url + tr.a.attrs['href'])
+                global book_count
+                if 0 < end_index <= book_count:
+                    return
 
 
 def get_book_list(url):
@@ -49,6 +53,9 @@ def get_book_list(url):
         for book in book_list:
             book_detail_url = book.select('.info > h2')[0].a.attrs['href']
             book_detail_name = book.select('.info > h2')[0].a.attrs['title']
+            global book_count
+            if 0 < end_index <= book_count:
+                return
             get_book_detail(book_detail_url, book_detail_name)
         # 下一页标签
         try:
@@ -66,6 +73,8 @@ def get_book_detail(url, name):
     print('第' + str(book_count) + '本书 ：' + name + ' url: ' + url)
     global tmp_book_info_json
     tmp_book_info_json = ''
+
+    save_book_info_to_log(name, url)
 
     if not is_test_url:
         if start_index >= book_count:
@@ -134,7 +143,7 @@ def deal_author_intro(soup):
     try:
         author_info = soup.select('#content > div > div.article > div.related_info > div.indent')[1]
         author_text = author_info.select('.intro')[0].text.strip()
-
+        author_text = str(author_text).replace('\\', '\\\\')
         author_text = re.sub('[\x00-\x1f]', ' ', str(author_text).replace('"', '\\"'))
         print('作者简介:' + author_text)
         book_info_json_joint('作者简介', author_text)
@@ -144,6 +153,7 @@ def deal_author_intro(soup):
     try:
         author_info = soup.select('#content > div > div.article > div.related_info > div.indent')
         author_text = author_info[0].select('span')[1].select('.intro')[0].text.strip()
+        author_text = str(author_text).replace('\\', '\\\\')
         author_text = re.sub('[\x00-\x1f]', ' ', str(author_text).replace('"', '\\"'))
         print('作者简介:' + author_text)
         book_info_json_joint('作者简介', author_text)
@@ -164,8 +174,9 @@ def deal_content_intro(soup):
 
         # print('内容简介:' + str(intro))
         # book_info_json_joint('内容简介', str(intro))
-
-        tmp_intro = re.sub('[\x00-\x1f]', ' ', intro.replace('"', '\\"'))
+        value_str = intro.replace('\\', '\\\\')
+        value_str = value_str.replace('"', '\\"')
+        tmp_intro = re.sub('[\x00-\x1f]', ' ', value_str)
         print('内容简介:' + tmp_intro)
         book_info_json_joint('内容简介', tmp_intro)
         return
@@ -174,7 +185,10 @@ def deal_content_intro(soup):
     pos = len(link_list)
     if pos > 0:
         intro = link_list[0].text.strip()
-        tmp_intro = re.sub('[\x00-\x1f]', ' ', intro.replace('"', '\\"'))
+        value_str = intro.replace('\\', '\\\\')
+        value_str = value_str.replace('"', '\\"')
+        tmp_intro = re.sub('[\x00-\x1f]', ' ', value_str)
+        # tmp_intro = re.sub('[\x00-\x1f]', ' ', intro.replace('"', '\\"').replace('\\', '\\\\'))
         print('内容简介:' + tmp_intro)
         book_info_json_joint('内容简介', tmp_intro)
         # book_info_json_joint('内容简介', str(intro))
@@ -219,6 +233,7 @@ def deal_with_key_map(key, pl, json):
         else:
             span_list = item_str.split('</span>')
             span = span_list[len(span_list) - 1].strip()
+            span = re.sub('[\x00-\x1f]', '', span)
             content = span
             _name = _name + span
         print(_name)
@@ -288,7 +303,9 @@ def book_info_json_joint(key, value):
         _id = 'score'
     elif _key == '标签':
         _id = 'tag'
-    tmp_book_info_json = tmp_book_info_json + ',\"' + _id + '\":\"' + str(value) + '\"'
+
+    if not _id == '':
+        tmp_book_info_json = tmp_book_info_json + ',\"' + _id + '\":\"' + str(value) + '\"'
 
 
 is_remove = False
@@ -296,9 +313,10 @@ is_remove = False
 
 def write_book_info(book_info):
     content = '{' + str(book_info)[1:] + '}'
+    print(content)
     json_str = json.loads(content)
     print('test:' + str(json_str))
-    print(content)
+
     print('检查json成功\n')
 
     if is_write:
@@ -322,11 +340,63 @@ def write_book_info(book_info):
             is_remove = False
         file_w.close()
 
+    save_index(book_count)
+
+
+def save_book_info_to_log(name, url):
+    """ 用于数据保存"""
+
+    if is_test_url:
+        return
+    log_file_r = open('Log', 'r+')
+    log_content = log_file_r.read()
+    log_file_r.close()
+    content_json = json.loads(log_content)
+    content_json['book_name'] = name
+    content_json['book_url'] = url
+
+    file_w = open('Log', 'w+')
+    file_w.write(json.dumps(content_json))
+    file_w.close()
+
+
+def save_index(count):
+    """ 用于数据保存 """
+    if is_test_url:
+        return
+    log_file_r = open('Log', 'r+')
+    log_content = log_file_r.read()
+    log_file_r.close()
+    content_json = json.loads(log_content)
+    content_json['start_index'] = count
+
+    file_w = open('Log', 'w+')
+    file_w.write(json.dumps(content_json))
+    file_w.close()
+
+
+def init_log():
+    """ 初始化信息 """
+    log_file = open('Log', 'r+')
+    content_json = json.loads(log_file.read())
+    log_file.close()
+    global start_index
+    global end_index
+    start_index = content_json['start_index']
+    end_index = content_json['end_index']
+
+    global is_write
+    is_write = content_json['is_write']
+
+    global isDebug
+    isDebug = content_json['is_debug']
+
 
 """ 开始 """
+
+book_count = 0
+init_log()
 if is_test_url:
-    book_count = 0
     get_book_detail(debug_url, debug_name)
 else:
-    book_count = 0
     get_book_tags()
