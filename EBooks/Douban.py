@@ -11,7 +11,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 
 # 如果开启的话，默认解析第一条
 isDebug = False
-start_index = 1272  # 1320
+start_index = 1272  # 第3239本书
 end_index = -1
 
 # 文件写入
@@ -21,8 +21,8 @@ write_file_path = 'BookInfo.txt'
 
 # 仅供调试使用
 is_test_url = False
-debug_url = 'https://book.douban.com/subject/27093233/'
-debug_name = '历史的温度'
+debug_url = 'https://book.douban.com/subject/1321547/'
+debug_name = '水浒传'
 
 
 def get_book_tags():
@@ -64,6 +64,8 @@ def get_book_list(url):
             get_book_list(tag_head_url + next_tags)
         except IndexError:
             print("标签页异常")
+        except AttributeError:
+            print('标签页异常')
 
 
 def get_book_detail(url, name):
@@ -199,6 +201,7 @@ def deal_book_name(soup):
     book_name = soup.select('#wrapper > h1 > span')
     if len(book_name) > 0:
         name_str = book_name[0].text.strip()
+        name_str = str(name_str).replace('"', '\\"')
         print('书名:' + str(name_str))
         book_info_json_joint('书名', name_str)
 
@@ -228,12 +231,14 @@ def deal_with_key_map(key, pl, json):
             last_pos = text.find('</a>')
             name = text[first_pos:last_pos].replace(' ', '').strip()
             name_value = re.sub('[\x00-\x1f]', '', name)
+            name_value = name_value.replace('\\', '\\\\')
             content = name_value
             _name = _name + name_value
         else:
             span_list = item_str.split('</span>')
             span = span_list[len(span_list) - 1].strip()
             span = re.sub('[\x00-\x1f]', '', span)
+            span = str(span).replace('\\', '\\\\')
             content = span
             _name = _name + span
         print(_name)
@@ -318,27 +323,27 @@ def write_book_info(book_info):
     print('test:' + str(json_str))
 
     print('检查json成功\n')
+    if not is_test_url:
+        if is_write:
+            global is_remove
+            if not os.path.exists(write_file_path):
+                is_remove = True
+                file = open(write_file_path, 'w+', encoding='utf-8')
+                file.write('[]')
+                file.close()
 
-    if is_write:
-        global is_remove
-        if not os.path.exists(write_file_path):
-            is_remove = True
-            file = open(write_file_path, 'w+', encoding='utf-8')
-            file.write('[]')
-            file.close()
+            file_r = open(write_file_path, 'rb+')
+            file_r.seek(-1, os.SEEK_END)
+            file_r.truncate()
+            file_r.close()
 
-        file_r = open(write_file_path, 'rb+')
-        file_r.seek(-1, os.SEEK_END)
-        file_r.truncate()
-        file_r.close()
-
-        file_w = open(write_file_path, 'a+', encoding='utf-8')
-        if not is_remove:
-            file_w.write(',' + content + ']')
-        else:
-            file_w.write(content + ']')
-            is_remove = False
-        file_w.close()
+            file_w = open(write_file_path, 'a+', encoding='utf-8')
+            if not is_remove:
+                file_w.write(',' + content + ']')
+            else:
+                file_w.write(content + ']')
+                is_remove = False
+            file_w.close()
 
     save_index(book_count)
 
