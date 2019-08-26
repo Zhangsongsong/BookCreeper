@@ -2,6 +2,7 @@ import json
 import os
 import re
 import time
+import fake_useragent
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,7 +12,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 
 # 如果开启的话，默认解析第一条
 isDebug = False
-start_index = 1272  # 第3239本书
+start_index = 1272  # 第9806本书
 end_index = -1
 
 # 文件写入
@@ -21,12 +22,23 @@ write_file_path = 'BookInfo.txt'
 
 # 仅供调试使用
 is_test_url = False
-debug_url = 'https://book.douban.com/subject/1321547/'
-debug_name = '水浒传'
+debug_url = 'https://book.douban.com/subject/2067064/'
+debug_name = 'I”S(01)'
+
+
+def deal_requests(url):
+    proxy = '183.6.183.35:3128'
+    proxies = {
+        'http': 'http://' + proxy,
+        'https': 'https://' + proxy,
+    }
+    ua = fake_useragent.UserAgent()
+    return requests.get(url, headers={'User-Agent': ua.random}, proxies=proxies)
 
 
 def get_book_tags():
-    req_result = requests.get(main_url)
+    # req_result = requests.get(main_url, proxies=proxies)
+    req_result = deal_requests(main_url)
     if req_result.status_code == 200:
         html_str = req_result.content.decode('utf-8')
         soup = BeautifulSoup(html_str, 'html.parser')
@@ -43,7 +55,8 @@ def get_book_tags():
 
 def get_book_list(url):
     print('get_book_list: ' + url)
-    req_result = requests.get(url)
+    # req_result = requests.get(url)
+    req_result = deal_requests(url)
     # print('get_book_list: ' + str(req_result.status_code))
 
     if req_result.status_code == 200:
@@ -83,7 +96,9 @@ def get_book_detail(url, name):
             return
 
     try:
-        req_result = requests.get(url)
+        # req_result = requests.get(url)
+        req_result = deal_requests(url)
+
     except requests.exceptions.ConnectionError:
         print('错误url: ' + url)
         return
@@ -131,7 +146,9 @@ def get_book_detail(url, name):
         tag_value = ''
         for span in tags_section_span:
             # print(span.a.text.strip())
-            tag_value = tag_value + span.a.text.strip() + ' '
+            span_text = str(span.a.text.strip()).replace('\\', '\\\\')
+            span_text = span_text.replace('"', '\\"')
+            tag_value = tag_value + span_text + ' '
         print('常用标签:' + tag_value)
         book_info_json_joint('标签', str(tag_value))
 
@@ -232,6 +249,7 @@ def deal_with_key_map(key, pl, json):
             name = text[first_pos:last_pos].replace(' ', '').strip()
             name_value = re.sub('[\x00-\x1f]', '', name)
             name_value = name_value.replace('\\', '\\\\')
+            name_value = name_value.replace('"', '\\"')
             content = name_value
             _name = _name + name_value
         else:
@@ -239,6 +257,7 @@ def deal_with_key_map(key, pl, json):
             span = span_list[len(span_list) - 1].strip()
             span = re.sub('[\x00-\x1f]', '', span)
             span = str(span).replace('\\', '\\\\')
+            span = span.replace('"', '\\"')
             content = span
             _name = _name + span
         print(_name)
