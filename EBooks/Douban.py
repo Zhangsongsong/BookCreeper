@@ -14,6 +14,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 isDebug = False
 start_index = 1272  # 第9806本书
 end_index = -1
+tag_index = 26  # 爱情
 
 # 文件写入
 is_write = False
@@ -34,6 +35,7 @@ def deal_requests(url):
     }
     ua = fake_useragent.UserAgent()
     return requests.get(url, headers={'User-Agent': ua.random}, proxies=proxies)
+    # return requests.get(url)
 
 
 def get_book_tags():
@@ -43,14 +45,18 @@ def get_book_tags():
         html_str = req_result.content.decode('utf-8')
         soup = BeautifulSoup(html_str, 'html.parser')
         tags = soup.select('#content > div > div.article > div:nth-child(2) > div')
+
+        tag_count = 0
         for div in tags:
             trs = div.select('.tagCol > tbody > tr')
             for tr in trs:
                 print(tr.a.attrs['href'] + '  ' + tr.a.text.strip())
-                get_book_list(tag_head_url + tr.a.attrs['href'])
-                global book_count
-                if 0 < end_index <= book_count:
-                    return
+                tag_count = tag_count + 1
+                if tag_count >= tag_index:
+                    get_book_list(tag_head_url + tr.a.attrs['href'])
+                    global book_count
+                    if 0 < end_index <= book_count:
+                        return
 
 
 def get_book_list(url):
