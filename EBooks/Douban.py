@@ -1,10 +1,12 @@
 import json
 import os
+import random
 import re
 import time
 import fake_useragent
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 
 tag_head_url = 'https://book.douban.com'
@@ -12,9 +14,9 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 
 # 如果开启的话，默认解析第一条
 isDebug = False
-start_index = 1272  # 第9806本书
+start_index = 1272  # 487
 end_index = -1
-tag_index = 26  # 爱情
+tag_index = 30  # 两性
 
 # 文件写入
 is_write = False
@@ -26,16 +28,47 @@ is_test_url = False
 debug_url = 'https://book.douban.com/subject/2067064/'
 debug_name = 'I”S(01)'
 
+# http://117.103.5.186:44825
+# http://109.72.227.56:53281
+
+cookies = [
+    'bid=KDr0ry3Xn5o; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; __utmc=30149280; push_noty_num=0; push_doumail_num=0; __yadk_uid=e1BC844JNKOA61MigB6hMIEQEe47uI55; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1566890758%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; __utma=30149280.1818568439.1565949828.1566886384.1566890759.33; __utmz=30149280.1566890759.33.5.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmt=1; __utmv=30149280.20284; __utmt_douban=1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=4f0364c0-b303-4f05-a735-d8d48a317e71; gr_cs1_4f0364c0-b303-4f05-a735-d8d48a317e71=user_id%3A1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03_4f0364c0-b303-4f05-a735-d8d48a317e71=true; dbcl2="202845392:7W+CLptWvr0"; ck=Skt7; _pk_id.100001.8cb4=101f7da4deb38711.1565949834.10.1566891183.1566886385.; __utmb=30149280.8.10.1566890759'
+    ,
+    'bid=KDr0ry3Xn5o; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; push_noty_num=0; push_doumail_num=0; __yadk_uid=e1BC844JNKOA61MigB6hMIEQEe47uI55; __utmv=30149280.20285; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1566900542%2C%22https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DqDe1S1tuxXwodtzAesgJXSPVaZK9b4QlzkG_vbm9azRsCs9_UsIklqlJexPoCFpT%26wd%3D%26eqid%3Df2afd0df00183faa000000065d650138%22%5D; _pk_ses.100001.8cb4=*; __utma=30149280.1818568439.1565949828.1566896459.1566900543.35; __utmc=30149280; __utmz=30149280.1566900543.35.6.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; __utmt=1; dbcl2="202855021:4ypJW6mjbdk"; ck=YVu2; _pk_id.100001.8cb4=101f7da4deb38711.1565949834.12.1566900607.1566896654.; __utmb=30149280.5.10.1566900543',
+    'bid=KDr0ry3Xn5o; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; __utmc=30149280; push_noty_num=0; push_doumail_num=0; __yadk_uid=e1BC844JNKOA61MigB6hMIEQEe47uI55; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1566890758%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; __utma=30149280.1818568439.1565949828.1566886384.1566890759.33; __utmz=30149280.1566890759.33.5.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); ap_v=0,6.0; dbcl2="202276626:MPkGuRSCBPg"; ck=Iz26; __utmt=1; __utmv=30149280.20227; _pk_id.100001.8cb4=101f7da4deb38711.1565949834.10.1566893803.1566886385.; __utmb=30149280.51.10.1566890759',
+    'bid=KDr0ry3Xn5o; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; __utmc=30149280; push_noty_num=0; push_doumail_num=0; __yadk_uid=e1BC844JNKOA61MigB6hMIEQEe47uI55; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1566890758%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; __utma=30149280.1818568439.1565949828.1566886384.1566890759.33; __utmz=30149280.1566890759.33.5.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=4f0364c0-b303-4f05-a735-d8d48a317e71; gr_cs1_4f0364c0-b303-4f05-a735-d8d48a317e71=user_id%3A1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03_4f0364c0-b303-4f05-a735-d8d48a317e71=true; ap_v=0,6.0; __utmv=30149280.20284; __utmt_douban=1; dbcl2="202846608:mj3UhN6ZbY4"; ck=aivV; _pk_id.100001.8cb4=101f7da4deb38711.1565949834.10.1566892278.1566886385.; __utmt=1; __utmb=30149280.23.10.1566890759',
+    'bid=KDr0ry3Xn5o; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; __utmc=30149280; push_noty_num=0; push_doumail_num=0; __yadk_uid=e1BC844JNKOA61MigB6hMIEQEe47uI55; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1566890758%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; __utma=30149280.1818568439.1565949828.1566886384.1566890759.33; __utmz=30149280.1566890759.33.5.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmt_douban=1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=4f0364c0-b303-4f05-a735-d8d48a317e71; gr_cs1_4f0364c0-b303-4f05-a735-d8d48a317e71=user_id%3A1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03_4f0364c0-b303-4f05-a735-d8d48a317e71=true; dbcl2="200525790:TO4Yj0bvEWk"; ck=5P71; _pk_id.100001.8cb4=101f7da4deb38711.1565949834.10.1566891385.1566886385.; __utmt=1; __utmv=30149280.20052; __utmb=30149280.13.10.1566890759'
+    ,
+    'bid=KDr0ry3Xn5o; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; __utmc=30149280; push_noty_num=0; push_doumail_num=0; __yadk_uid=e1BC844JNKOA61MigB6hMIEQEe47uI55; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1566890758%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_ses.100001.8cb4=*; __utma=30149280.1818568439.1565949828.1566886384.1566890759.33; __utmz=30149280.1566890759.33.5.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=4f0364c0-b303-4f05-a735-d8d48a317e71; gr_cs1_4f0364c0-b303-4f05-a735-d8d48a317e71=user_id%3A1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03_4f0364c0-b303-4f05-a735-d8d48a317e71=true; __utmt=1; dbcl2="202845782:1TiJMnhnGhg"; ck=D5H2; ap_v=0,6.0; __utmv=30149280.20284; _pk_id.100001.8cb4=101f7da4deb38711.1565949834.10.1566891536.1566886385.; __utmb=30149280.18.10.1566890759'
+    ,
+    'bid=KDr0ry3Xn5o; __yadk_uid=dx9HW1Oldi8Sx5e8oyOA6mHgRHI1Qn67; ll="118281"; gr_user_id=6ea35de4-ad7b-415b-8a95-0781ec525004; _vwo_uuid_v2=DA62BB396B3E7249F974E2CDACD9D7C59|0583b5f97761053db60af2ed2775a954; ct=y; __gads=ID=63be7534ee366445:T=1566351934:S=ALNI_MYMa8QdtIz4ESy_82PzftVAxJncgw; viewed="3921921_1014278_26742663_1770782_26389895_1019568_30472543_25862578_30230061_1083435"; __utmc=30149280; __utmc=81379588; push_noty_num=0; push_doumail_num=0; __utma=30149280.1818568439.1565949828.1566886384.1566890759.33; __utmz=30149280.1566890759.33.5.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmt=1; dbcl2="202845014:WehYRXXSAuQ"; ck=StY6; __utmv=30149280.20284; _pk_ref.100001.3ac3=%5B%22%22%2C%22%22%2C1566890819%2C%22https%3A%2F%2Fwww.douban.com%2F%22%5D; _pk_id.100001.3ac3=3ac25d4c11ae389c.1565949828.32.1566890819.1566877721.; _pk_ses.100001.3ac3=*; __utmt_douban=1; __utmb=30149280.4.10.1566890759; __utma=81379588.1905919852.1565949838.1566874444.1566890819.32; __utmz=81379588.1566890819.32.4.utmcsr=douban.com|utmccn=(referral)|utmcmd=referral|utmcct=/; __utmb=81379588.1.10.1566890819; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=4f0364c0-b303-4f05-a735-d8d48a317e71; gr_cs1_4f0364c0-b303-4f05-a735-d8d48a317e71=user_id%3A1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03_4f0364c0-b303-4f05-a735-d8d48a317e71=true']
+
 
 def deal_requests(url):
-    proxy = '183.6.183.35:3128'
+    proxy = '180.117.232.106:8118'
     proxies = {
         'http': 'http://' + proxy,
         'https': 'https://' + proxy,
     }
     ua = fake_useragent.UserAgent()
-    return requests.get(url, headers={'User-Agent': ua.random}, proxies=proxies)
-    # return requests.get(url)
+    try:
+        # req_result = requests.get(url, headers={'User-Agent': ua.random}, proxies=proxies)
+        cookie = cookies[1]
+        req_result = requests.get(url, headers={'User-Agent': ua.random,
+                                                'Cookie': cookie}
+                                  )
+        print(req_result.status_code)
+        if req_result.status_code == 200:
+            return req_result
+    except urllib3.exceptions.MaxRetryError:
+        deal_requests(url)
+    except requests.exceptions.ProxyError:
+        deal_requests(url)
+
+    deal_requests(url)
+
+
+# return requests.get(url)
 
 
 def get_book_tags():
@@ -54,6 +87,7 @@ def get_book_tags():
                 tag_count = tag_count + 1
                 if tag_count >= tag_index:
                     get_book_list(tag_head_url + tr.a.attrs['href'])
+                    return
                     global book_count
                     if 0 < end_index <= book_count:
                         return
@@ -69,16 +103,20 @@ def get_book_list(url):
         html_str = req_result.content.decode('utf-8')
         soup = BeautifulSoup(html_str, 'html.parser')
         book_list = soup.select('#subject_list > ul > li')
+
         for book in book_list:
             book_detail_url = book.select('.info > h2')[0].a.attrs['href']
             book_detail_name = book.select('.info > h2')[0].a.attrs['title']
+
             global book_count
             if 0 < end_index <= book_count:
                 return
             get_book_detail(book_detail_url, book_detail_name)
         # 下一页标签
         try:
+            print(soup.select('#subject_list > div.paginator > span.next')[0].a.attrs['href'])
             next_tags = soup.select('#subject_list > div.paginator > span.next')[0].a.attrs['href']
+
             time.sleep(1)
             get_book_list(tag_head_url + next_tags)
         except IndexError:
