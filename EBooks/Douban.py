@@ -16,7 +16,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 isDebug = False
 start_index = 1272  # 487
 end_index = -1
-tag_index = 18  # 文化(493283)
+tag_index = 22  # 人文(493283)
 
 # 文件写入
 is_write = False
@@ -45,13 +45,9 @@ def deal_requests(url):
         # req_result = requests.get(url, headers={'User-Agent': ua.random}, proxies=proxies)
         cookie = m_cookie
         req_result = requests.get(url, headers={'User-Agent': ua.random,
-                                                'Cookie': cookie
-            , 'Connection': 'keep-alive'
-            , 'Sec-Fetch-User': '?1'
-            , 'Upgrade-Insecure-Requests': '1'
-            , 'Referer': 'https://accounts.douban.com/passport/register'
-            , 'Sec-Fetch-Mode': 'navigate','Host':'www.douban.com'}
+                                                'Cookie': cookie}
                                   )
+        # req_result = requests.get(url, headers={'User-Agent': ua.random})
         print(req_result.status_code)
         if req_result.status_code == 200:
             return req_result

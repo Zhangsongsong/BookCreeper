@@ -452,7 +452,7 @@ def init_log():
     global isDebug
     isDebug = content_json['is_debug']
     global m_cookie
-    co = open('Cookie', 'r+')
+    co = open('../Cookie', 'r+')
     m_cookie = str(co.read())
     co.close()
 
