@@ -16,7 +16,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 isDebug = False
 start_index = 1272  # 487
 end_index = -1
-tag_index = 18  # 文化(493283)
+tag_index = 20  # 政治学(493283)
 
 # 文件写入
 is_write = False
@@ -28,9 +28,6 @@ is_test_url = False
 debug_url = 'https://book.douban.com/subject/2067064/'
 debug_name = 'I”S(01)'
 
-# http://117.103.5.186:44825
-# http://109.72.227.56:53281
-
 m_cookie = ''
 
 
@@ -40,17 +37,12 @@ def deal_requests(url):
         'http': 'http://' + proxy,
         'https': 'https://' + proxy,
     }
-    ua = fake_useragent.UserAgent(use_cache_server=False)
+    ua = fake_useragent.UserAgent()
     try:
         # req_result = requests.get(url, headers={'User-Agent': ua.random}, proxies=proxies)
         cookie = m_cookie
         req_result = requests.get(url, headers={'User-Agent': ua.random,
-                                                'Cookie': cookie
-            , 'Connection': 'keep-alive'
-            , 'Sec-Fetch-User': '?1'
-            , 'Upgrade-Insecure-Requests': '1'
-            , 'Referer': 'https://accounts.douban.com/passport/register'
-            , 'Sec-Fetch-Mode': 'navigate','Host':'www.douban.com'}
+                                                'Cookie': cookie}
                                   )
         print(req_result.status_code)
         if req_result.status_code == 200:
@@ -118,7 +110,7 @@ def get_book_list(url):
             print(soup.select('#subject_list > div.paginator > span.next')[0].a.attrs['href'])
             next_tags = soup.select('#subject_list > div.paginator > span.next')[0].a.attrs['href']
 
-            time.sleep(1)
+            time.sleep(3)
             get_book_list(tag_head_url + next_tags)
         except IndexError:
             print("标签页异常")
@@ -199,7 +191,7 @@ def get_book_detail(url, name):
 
         # 图书信息的最后处理
         write_book_info(tmp_book_info_json)
-        time.sleep(1)
+        time.sleep(5)
 
 
 def deal_author_intro(soup):
@@ -460,7 +452,7 @@ def init_log():
     global isDebug
     isDebug = content_json['is_debug']
     global m_cookie
-    co = open('Cookie', 'r+')
+    co = open('../copy02/Cookie', 'r+')
     m_cookie = str(co.read())
     co.close()
 
