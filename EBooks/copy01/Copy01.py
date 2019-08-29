@@ -16,7 +16,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 isDebug = False
 start_index = 1272  # 487
 end_index = -1
-tag_index = 17  # 心理学(493283)
+tag_index = 10  # 推理小说(493283)
 
 # 文件写入
 is_write = False
@@ -255,6 +255,7 @@ def deal_book_name(soup):
     book_name = soup.select('#wrapper > h1 > span')
     if len(book_name) > 0:
         name_str = book_name[0].text.strip()
+        name_str = str(name_str).replace('\\','\\\\')
         name_str = str(name_str).replace('"', '\\"')
         print('书名:' + str(name_str))
         book_info_json_joint('书名', name_str)

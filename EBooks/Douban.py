@@ -16,7 +16,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 isDebug = False
 start_index = 1272  # 487
 end_index = -1
-tag_index = 22  # 人文(493283)
+tag_index = 9  # 悬疑(493283)
 
 # 文件写入
 is_write = False
@@ -75,7 +75,7 @@ def get_book_tags():
             trs = div.select('.tagCol > tbody > tr')
             for tr in trs:
                 try:
-                    td = tr.select('td')[1]
+                    td = tr.select('td')[2]
                     print(td)
 
                     tag_count = tag_count + 1
