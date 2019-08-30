@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f666db4-df62-418b-a759-563ef8adcb5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BookInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/BookInfo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cookie" beforeDir="false" afterPath="$PROJECT_DIR$/Cookie" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Douban.py" beforeDir="false" afterPath="$PROJECT_DIR$/Douban.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Log" beforeDir="false" afterPath="$PROJECT_DIR$/Log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/copy01/Copy01.py" beforeDir="false" afterPath="$PROJECT_DIR$/copy01/Copy01.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/copy01/BookInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/copy01/BookInfo.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/copy01/Log" beforeDir="false" afterPath="$PROJECT_DIR$/copy01/Log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tags/武侠/BookInfo.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -314,7 +310,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1819" y="31" width="1665" height="1040" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14828661" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
