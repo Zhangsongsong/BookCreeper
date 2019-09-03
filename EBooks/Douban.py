@@ -16,7 +16,7 @@ main_url = 'https://book.douban.com/tag/?view=type&icn=index-sorttags-hot'
 isDebug = False
 start_index = 1272  # 487
 end_index = -1
-tag_index = 20  # 数学(493283)
+tag_index = 36  # 程序(493283)
 
 # 文件写入
 is_write = False
