@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f666db4-df62-418b-a759-563ef8adcb5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/doub/deal/Log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doub/deal/MergeBooks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doub/CheckInfo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/doub/Cookie" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/doub/Douban.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/doub/Kuguashupan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/doub/Log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/doub/deal/Log" beforeDir="false" afterPath="$PROJECT_DIR$/doub/deal/Log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/doub/deal/MergeBooks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="119" lean-forward="true" selection-start-line="119" selection-end-line="119" />
+            <state relative-caret-position="124">
+              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -320,12 +313,12 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11940298" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18017058" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.69339114" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5785482" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.289011" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -543,8 +536,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doub/deal/MergeBooks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="119" lean-forward="true" selection-start-line="119" selection-end-line="119" />
+        <state relative-caret-position="124">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
