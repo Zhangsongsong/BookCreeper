@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f666db4-df62-418b-a759-563ef8adcb5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cookie" beforeDir="false" afterPath="$PROJECT_DIR$/Cookie" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Douban.py" beforeDir="false" afterPath="$PROJECT_DIR$/Douban.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Log" beforeDir="false" afterPath="$PROJECT_DIR$/Log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/copy01/BookInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/copy01/BookInfo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/copy01/Copy01.py" beforeDir="false" afterPath="$PROJECT_DIR$/copy01/Copy01.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/copy01/Log" beforeDir="false" afterPath="$PROJECT_DIR$/copy01/Log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +24,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Douban.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
+            <state relative-caret-position="234">
               <caret line="18" column="14" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -51,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/copy01/Copy01.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2122">
-              <caret line="193" column="23" selection-start-line="193" selection-start-column="23" selection-end-line="193" selection-end-column="23" />
+            <state relative-caret-position="-100">
+              <caret line="177" column="26" lean-forward="true" selection-start-line="177" selection-start-column="26" selection-end-line="177" selection-end-column="26" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -123,7 +117,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -150,6 +143,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -315,9 +309,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13272922" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1337953" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -478,16 +471,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Log">
+    <entry file="file://$PROJECT_DIR$/Cookie">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="17" selection-start-column="17" selection-end-column="17" />
+          <caret column="849" selection-start-column="849" selection-end-column="849" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Douban.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
+        <state relative-caret-position="234">
           <caret line="18" column="14" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -495,10 +488,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Cookie">
+    <entry file="file://$PROJECT_DIR$/Log">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="849" selection-start-column="849" selection-end-column="849" />
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -511,8 +504,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/copy01/Copy01.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2122">
-          <caret line="193" column="23" selection-start-line="193" selection-start-column="23" selection-end-line="193" selection-end-column="23" />
+        <state relative-caret-position="-100">
+          <caret line="177" column="26" lean-forward="true" selection-start-line="177" selection-start-column="26" selection-end-line="177" selection-end-column="26" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
