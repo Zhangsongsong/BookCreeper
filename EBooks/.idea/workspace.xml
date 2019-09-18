@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f666db4-df62-418b-a759-563ef8adcb5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/doub/creeper/GetBookDetail.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/doub/creeper/DayNewBook.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doub/creeper/Log" beforeDir="false" afterPath="$PROJECT_DIR$/doub/creeper/Log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doub/deal/MergeBooks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="494">
+              <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -29,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doub/creeper/GetBookDetail.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1259">
-              <caret line="247" column="22" lean-forward="true" selection-start-line="247" selection-start-column="22" selection-end-line="247" selection-end-column="22" />
+            <state relative-caret-position="393">
+              <caret line="183" column="19" selection-start-line="183" selection-start-column="4" selection-end-line="183" selection-end-column="19" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -41,11 +40,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doub/creeper/Douban.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="198" lean-forward="true" selection-start-line="198" selection-end-line="305" />
+            <state relative-caret-position="195">
+              <caret line="374" selection-start-line="374" selection-end-line="374" selection-end-column="17" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#9980#11404#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/doub/creeper/DayNewBook.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="259" column="33" selection-start-line="259" selection-start-column="26" selection-end-line="259" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,6 +82,7 @@
       <find>m_cookie</find>
       <find>tmp_book_info_json</find>
       <find>get_book_detail</find>
+      <find>is_remove</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -94,12 +106,13 @@
         <option value="$PROJECT_DIR$/doub/deal/Log" />
         <option value="$PROJECT_DIR$/doub/creeper/GetBookDetail.py" />
         <option value="$PROJECT_DIR$/doub/deal/MergeBooks.py" />
+        <option value="$PROJECT_DIR$/doub/creeper/DayNewBook.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-292" />
-    <option name="y" value="6" />
+    <option name="x" value="64" />
+    <option name="y" value="15" />
     <option name="width" value="1665" />
     <option name="height" value="1040" />
   </component>
@@ -129,12 +142,6 @@
               <item name="EBooks" type="462c0819:PsiDirectoryNode" />
               <item name="doub" type="462c0819:PsiDirectoryNode" />
               <item name="creeper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EBooks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="EBooks" type="462c0819:PsiDirectoryNode" />
-              <item name="doub" type="462c0819:PsiDirectoryNode" />
-              <item name="deal" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -166,7 +173,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.MergeBooks">
+  <component name="RunManager" selected="Python.DayNewBook">
     <configuration name="Copy01" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="EBooks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -188,7 +195,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Copy03" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="DayNewBook" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="EBooks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -196,11 +203,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/copy03" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/doub/creeper" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/copy03/Copy03.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/doub/creeper/DayNewBook.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -274,11 +281,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.DayNewBook" />
         <item itemvalue="Python.GetBookDetail" />
         <item itemvalue="Python.MergeBooks" />
         <item itemvalue="Python.Copy01" />
         <item itemvalue="Python.Douban" />
-        <item itemvalue="Python.Copy03" />
       </list>
     </recent_temporary>
   </component>
@@ -305,15 +312,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="64" y="15" width="1665" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1663113" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19626169" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1787649" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.033076074" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.27232635" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -440,10 +447,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/doub/deal/MergeBooks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doub/creeper/GetBookDetail.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="183" column="19" selection-start-line="183" selection-start-column="4" selection-end-line="183" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/doub/creeper/Douban.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="198" lean-forward="true" selection-start-line="198" selection-end-line="305" />
+        <state relative-caret-position="195">
+          <caret line="374" selection-start-line="374" selection-end-line="374" selection-end-column="17" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#9980#11404#0" />
@@ -451,20 +478,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doub/creeper/GetBookDetail.py">
+    <entry file="file://$PROJECT_DIR$/doub/creeper/DayNewBook.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1259">
-          <caret line="247" column="22" lean-forward="true" selection-start-line="247" selection-start-column="22" selection-end-line="247" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doub/deal/MergeBooks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+        <state relative-caret-position="229">
+          <caret line="259" column="33" selection-start-line="259" selection-start-column="26" selection-end-line="259" selection-end-column="33" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
