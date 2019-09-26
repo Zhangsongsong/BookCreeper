@@ -1,3 +1,8 @@
+"""
+豆瓣 > 新书速递
+爬虫
+"""
+
 import json
 import os
 import re
@@ -8,6 +13,7 @@ from bs4 import BeautifulSoup
 main_url = 'https://book.douban.com/latest?icn=index-latestbook-all'
 
 tmp_book_info_json = ''
+
 
 
 def book_info_json_joint(key, value):
